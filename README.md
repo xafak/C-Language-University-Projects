@@ -1,2 +1,2 @@
 # C-Language-University-Projects
-Projects assigned for developing by University
+Projects developed by me that are assigned to us by our University
