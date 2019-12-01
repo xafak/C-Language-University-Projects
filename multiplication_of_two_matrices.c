@@ -78,6 +78,12 @@ int main(void)
             }
         
         //data calculation for matrixAnswer/resultant matrix
+        
+        /*the conditions that have been setted here are on the base of the thrid matrix size 
+          i.e. int matrixAnswer[userRowsA][userColumnsB];
+          as we know that the third matrix will have the same number of rows as the first matrix and same number of columns
+          as the second matrix hence the same condition has been applied here for saving the data into the third matrix
+        */
         for(row=0;row<userRowsA;row++)
         {
             for(col=0;col<userColumnsB;col++)
