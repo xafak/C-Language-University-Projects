@@ -1,37 +1,37 @@
 /*
- *           Filename:             Trignometric_functions.c
+ *           File-name:            Trigonometric_functions.c
  *
- *           Description:          C program for calculating values of the angles present in the trignometric table, i.e.
- *                                 0,30,45,60,90. All of these irregular data are customly feeded into 2D Arrays and are            
+ *           Description:          C program for calculating values of the angles present in the trigonometric table, i.e.
+ *                                 0,30,45,60,90. All of these irregular data are custom fed into 2D Arrays and are            
  *                                 further read from there.
  * 
  *           Programming Language: C-Programming Language
  *
  *           Created:              8th December, 2019 2: 41 AM (PST)
- *           Revision:             5th
+ *           Revision:             6th
  *
  *           @Author:              Sanzar Farooq - sanzarfarooq01@gmail.com
- *           @Version:             1.5
+ *           @Version:             1.6
  * 
  *           Note:                 The program has been reviewed many times because of inaccurate created values. But at
  *                                 present all the values are accurately calculated.
  *                                  
- *                                 For linux users it is advised to use "-lm"  to link with the math library in the step 
+ *                                 For Linux users it is advised to use "-lm"  to link with the math library in the step 
  *                                 where you are attempting to generate your executable.
  */
 
 
 
 #include<stdio.h>
-#include<math.h> //will be used for using sqrt() function and trignometric ratio functions
+#include<math.h> //will be used for using sqrt() function and trigonometric ratio functions
 
-void drawTable(void); //function for drawing the entire trignometric ratios table
+void drawTable(void); //function for drawing the entire trigonometric ratios table
 
 float trig_calculate(char str[10] , int angle); 
 
-float degreeToRadian(double degree) //function for converting the provided degrees into radians for trignometric functions calculation
+float degreeToRadian(double degree) //function for converting the provided degrees into radian for trigonometric functions calculation
 {
-    //its necessary to seperately calculate them or else it'll calculate inaccurate value
+    //its necessary to separately calculate them or else it'll calculate inaccurate value
     float answer = (degree * 22/7);
     return answer/180;
 }
@@ -44,17 +44,17 @@ int main(void)
     char str[10];
     do{
         system("clear");
-        printf("<<< Welcome Dear User for calclating trignometric ratios! >>>\n");
-        printf("*** Press 1 for calculating a single value using your desired trignometric function ***\n");
-        printf("*** Press 2 to view the entire table of trignometric functions ***\n");
+        printf("<<< Welcome Dear User for calculating trigonometric ratios! >>>\n");
+        printf("*** Press 1 for calculating a single value using your desired trigonometric function ***\n");
+        printf("*** Press 2 to view the entire table of trigonometric functions ***\n");
         printf("You choice: ");
         scanf("%d", &prog_mode_choice); 
         
         if(prog_mode_choice==1)
         {
-            printf("Enter any one trignometric function name from below:");
+            printf("Enter any one trigonometric function name from below:");
             printf("\n sin\n cos\n tan\n cosec\n sec\n cot\n");
-            printf("Enter your trignometric function name: ");
+            printf("Enter your trigonometric function name: ");
             scanf("%s", str);//we're using scanf() function here for string because our provided string doesn't have spaces so for this purpose it can be used or else we'd have used gets() or fgets()
             
             printf("\nEnter the angle (must be 0,30,45,60,90): ");
@@ -85,10 +85,10 @@ int main(void)
     
 }//end main function
 
-//function for calculation of the trignometric value
+//function for calculation of the trigonometric value
 float trig_calculate(char str[10], int angle)
 {
-    /*In this step we cannot use any loop for direct data entry into the arrys because we're feeding irregular data into the arrays, so, 
+    /*In this step we cannot use any loop for direct data entry into the arrays because we're feeding irregular data into the arrays, so, 
     row 0 = sin,
     row 1 = cos, 
     row 2 = tan, 
@@ -105,7 +105,7 @@ float trig_calculate(char str[10], int angle)
     int ratio_number=0;
     int angle_number=0;
     /*
-    it must be kept in mind that all the programming languages takes input in the form of radian which is why it's necessary to provide values in the form of radians to get accurate answers. For this purpose we'll be converting values into radians using our defined function
+    it must be kept in mind that all the programming languages takes input in the form of radian which is why it's necessary to provide values in the form of radian to get accurate answers. For this purpose we'll be converting values into radian using our defined function
     it'll give us the answers as if they were calculated in the form of degrees
     
     */
@@ -152,7 +152,7 @@ float trig_calculate(char str[10], int angle)
         trig_values[5][4]=1/tan(degreeToRadian(90));
         
         
-        //following steps made for the purpose of accurately moving through array elements
+        //following steps are made so that the program utilizes the arrays properly and moves in between its elements accurately
         if(strcmp(str,"sin")==0)
             ratio_number=0;
         
