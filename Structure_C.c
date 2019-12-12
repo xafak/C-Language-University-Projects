@@ -1,7 +1,7 @@
 /*
  *           File-name:            Structure_C.c
  *
- *           Description:          C program for demonstrating input of values in a single line and declaring multiple structure variable in a 
+ *           Description:          C program for demonstrating input of values in a single line and declaring multiple structure variable in a
 				   single line.
  * 
  *           Programming Language: C-Programming Language
