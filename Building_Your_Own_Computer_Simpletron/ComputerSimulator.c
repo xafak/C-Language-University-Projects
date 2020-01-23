@@ -5,11 +5,11 @@
  *
  *           Programming Language: C-Programming Language
  *
- *           Created:              23rd January, 2020 7:45 pm (PST)
- *           Revision:             4th
+ *           Created:              23rd January, 2020 9:55 pm (PST)
+ *           Revision:             5th
  *
  *           @Author:              Sanzar Farooq - sanzarfarooq01@gmail.com
- *           @Version:             0.4
+ *           @Version:             0.5
  *	    
  * 	     Note:		   THIS PROGRAM IS STILL IN DEVELOPMENT STAGE
  */
@@ -53,7 +53,7 @@ int main(void)
     int operationCode=0; //for indicating the operation being performed(the first two numbers in WORD)
     int operand=0;//for indicating the memory location on which the operation is being performed (the last two numbers in WORD)
     int instructionRegister=0; //instruction to be executed next from memory array will be transferred here first and then ran
-    int i;
+    int i=0;
    
 
     //first initializing all the elements of the memory array to 0
@@ -62,17 +62,19 @@ int main(void)
     
     loadProg(memory);
     executeProg(memory, &accumulator, &instructionCounter, &operationCode, &operand,&instructionRegister);
-    dump(*memory,accumulator, instructionCounter, instructionRegister, operationCode, operand);
+    dump(memory,accumulator, instructionCounter, instructionRegister, operationCode, operand);
 
     return 0;
 }//end function main
 
 void loadProg(int *memory)
 {
+    //currentInstruction's data type should be long int because it won't work with int (TESTED)
     long int currentInstruction=0; //for storing the current instruction
+
     int i=0; //for counter-controlled loop 
 
-      printf("\n*** Welcome to Simpletron! ***\n"
+    printf("\n*** Welcome to Simpletron! ***\n"
     "*** Please enter your program one instruction  ***\n"
     "*** (or data word) at a time. I will type the ***\n"
     "*** location number and a question mark (?)    ***\n"
@@ -85,41 +87,42 @@ void loadProg(int *memory)
     //taking instructions from user and storing them in array memory
 
     printf("00 ? ");
-    scanf("%ld",&currentInstruction);
+    scanf("%ld",&currentInstruction); //first instruction at memory location 00 would be fed into memory here
    
     while(currentInstruction!=SENTINEL)
     {
         if(!wordInRange(currentInstruction))
             printf("\nPlease re-enter the number in the range between -99999 and 99999");
         else
-            memory[i++] = currentInstruction;
+            memory[i++] = currentInstruction; /* second instruction from memory 01 onwards data would be fed 
+                                                from here which is why we've incremented i */
 
         printf("\n%02d ? ",i);
         scanf("%ld",&currentInstruction);
     }//end while
 
- printf("\n*** Program loading completed ***\n");
+    printf("\n*** Program loading completed ***\n");
 
 }//end function loadProg
 
 void executeProg(int *memory, int *acmltrPtr, int *insCounPtr, int *oprtnCodPtr, int *oprndPtr, int *insRegPtr)
 {
     int fatal=FALSE; //initially initialized to 0 i.e. FALSE
-    int temp; //will be used for temporary storage and later for validation of data
-    int i;
+    int temp=0; //will be used for temporary storage and later for validation of data
+    
     printf("*** Program execution begins ***\n");
     //now program execution begins
     
-    //first we'll separate the operation code and*oprndPtr as instructed
+    //first we'll separate the operation code and operand code as instructed
     *insRegPtr = memory[*insCounPtr];
-    *oprtnCodPtr = *insCounPtr/100;
-    *oprndPtr = *insRegPtr%100;
+    *oprtnCodPtr = *insRegPtr / 100;
+    *oprndPtr = *insRegPtr % 100;
     
 
     /* now determining what the instruction code is (like if it's READ, WRITE etc. as defined)
     using the switch statement
     we'll be using the while statement and will make sure that the opeartion code is not halt or fatal*/
-    while(*oprtnCodPtr!=HALT && !fatal)
+    while(*oprtnCodPtr!=HALT && !fatal) //!fatal=fatal=FALSE
     {
         switch(*oprtnCodPtr)
         {
@@ -127,34 +130,34 @@ void executeProg(int *memory, int *acmltrPtr, int *insCounPtr, int *oprtnCodPtr,
                 printf("Enter an integer: ");
                 scanf("%d",&temp);
 
-                while(!wordInRange(temp)) //check if this line is fine
+                while(!wordInRange(temp))
                 {
-                    printf("nPlease re-enter the number in the range between -99999 and 99999");
+                    printf("nPlease re-enter the number in the range between -9999 and 9999");
                     scanf("%d",&temp);
                 }
             
-                memory[*oprndPtr] = temp;
+                memory[*oprndPtr] = temp; //here data would be red from temp and written into specific memory array location
                 (*insCounPtr)++; //used as a transfer of control
-                break;
+            break;
        
             case WRITE:
-                printf("\nMemory at %d contains: %d",*oprndPtr,memory[*oprndPtr]);
+                printf("\nMemory at %02d contains: %d",*oprndPtr,memory[*oprndPtr]);//inspect this line
                 (*insCounPtr)++;
-                break;
+            break;
      
             case LOAD:
                 *acmltrPtr=memory[*oprndPtr];
                 (*insCounPtr)++;
-                break;
+            break;
        
             case STORE:
-                memory[*oprndPtr]=*acmltrPtr;
+                memory[*oprndPtr]=*acmltrPtr; //data from accumulator pointer would be saved into memory[operand]
                 (*insCounPtr)++;
-                break;
+            break;
        
             case ADD:
                 temp = *acmltrPtr+memory[*oprndPtr]; /*here we're adding value present in *acmltrPtr with 
-                                                //the value stored in memory and then keeping it in variable temp*/
+                                                the value stored in memory and then keeping it in variable temp*/
                 if(!wordInRange(temp))
                 {
                     printf("\n*** FATAL ERROR: Value in *acmltrPtr out of range!!! ***");
@@ -166,9 +169,9 @@ void executeProg(int *memory, int *acmltrPtr, int *insCounPtr, int *oprtnCodPtr,
                     *acmltrPtr=temp; //else *acmltrPtr will store the new value 
                     (*insCounPtr)++;
                 }
-                break;
+            break;
        
-                case SUBTRACT: 
+            case SUBTRACT: 
                 temp = *acmltrPtr-memory[*oprndPtr];
                 if(!wordInRange(temp))
                 {
@@ -181,9 +184,9 @@ void executeProg(int *memory, int *acmltrPtr, int *insCounPtr, int *oprtnCodPtr,
                     *acmltrPtr=temp; 
                     (*insCounPtr)++;
                 }
-                break;
+            break;
        
-                case DIVIDE: //in this case we'll be checking if 0 is stored in the very specific memory location
+            case DIVIDE: //in this case we'll be checking if 0 is stored in the very specific memory location
                 if(memory[*oprndPtr] == 0)
                 {
                     printf("\n*** Attempt to divide by zero ***");
@@ -192,68 +195,68 @@ void executeProg(int *memory, int *acmltrPtr, int *insCounPtr, int *oprtnCodPtr,
                 }
                 else
                 {
+                    *acmltrPtr/=memory[*oprndPtr]; 
+                    (*insCounPtr)++;
+                }
+            break;
+       
+            case MULTIPLY:
+                temp = *acmltrPtr * memory[*oprndPtr];
+            
+                if(!wordInRange(temp))
+                {
+                    printf("\n*** FATAL ERROR: Value in *acmltrPtr is out of range!!! ***");
+                    printf("\n*** Simpletron execution abnormally terminated ***");
+                    fatal = TRUE;
+                }
+                else
+                {
                     *acmltrPtr=temp; 
                     (*insCounPtr)++;
                 }
-                break;
+            break;
        
-                case MULTIPLY:
-                    temp=*acmltrPtr*memory[*oprndPtr];
-            
-                if(!wordInRange(temp))
-                 {
-                    printf("\n*** FATAL ERROR: Value in *acmltrPtr out of range!!! ***");
+            case BRANCH: //case used for moving to a certain memory location
+                         //in this case we're required store*oprndPtr's value in *insCounPtr as
+                         //*insCounPtr stores the value of the instruction's location in memory
+                *insCounPtr=*oprndPtr;
+            break;
+       
+            case BRANCHNEG: //for checking if *acmltrPtr has a negative value in it
+                if(*acmltrPtr<0)
+                    *insCounPtr=*oprndPtr;
+                else
+                    (*insCounPtr)++;
+            break;
+       
+            case BRANCHZERO: //for checking if *acmltrPtr has 0 value stored in it
+                if(*acmltrPtr==0)
+                    *insCounPtr=*oprndPtr;
+                else
+                    (*insCounPtr)++;
+            break;
+       
+            case HALT:
+                    printf("\n*** Simpletron execution terminated ***\n");
+            break;
+    
+            default://in case of operation codes entered without those that are pre-defined
+                printf("\n*** FATAL ERROR: Invalid Operation Code Detected ***");
                 printf("\n*** Simpletron execution abnormally terminated ***");
                 fatal = TRUE;
-            }
-            else
-            {
-                *acmltrPtr=temp; 
-                (*insCounPtr)++;
-            }
-            break;
-       
-        case BRANCH: //case used for moving to a certain memory location
-                     //in this case we're required store*oprndPtr's value in *insCounPtr as
-                     //*insCounPtr stores the value of the instruction's location in memory
-            *insCounPtr=*oprndPtr;
-            break;
-       
-        case BRANCHNEG: //for checking if *acmltrPtr has a negative value in it
-            if(*acmltrPtr<0)
-                *insCounPtr=*oprndPtr;
-            else
-                (*insCounPtr)++;
-            break;
-       
-        case BRANCHZERO: //for checking if *acmltrPtr has 0 value stored in it
-            if(*acmltrPtr==0)
-                *insCounPtr=*oprndPtr;
-            else
-                (*insCounPtr)++;
-            break;
-       
-        case HALT:
-            printf("\n*** Simpletron execution terminated ***\n");
-            break;
-
-        default://in case of operation codes entered without those that are pre-defined
-            printf("\n*** FATAL ERROR: Invalid Operation Code Detected ***");
-            printf("\n*** Simpletron execution abnormally terminated ***");
-            fatal = TRUE;
             break; //optional to put break here
 
-        //again making next operation's code ready by seperating its operation and operation code;
-
-        *insRegPtr=memory[*insCounPtr];
-        *oprtnCodPtr=*insCounPtr/100;
-        *oprndPtr=*insRegPtr%100;
         
+        //again making next operation's code ready by seperating its operation and operation code;
+        *insRegPtr = memory[*insCounPtr];
+        *oprtnCodPtr = *insRegPtr / 100;
+        *oprndPtr = *insRegPtr % 100;
     }
-    printf("\n*** END SIMPLETRON EXECUTION ***");
+    //printf("\n*** END SIMPLETRON EXECUTION ***");
+    }//end while
 }//end function execProg
 
-void dump( int *memory, int accumulator, int instructionCounter, int instructionRegister, int operationCode, int operand )
+void dump( int *memory, int accumulator, int instructionCounter, int instructionRegister, int operationCode, int operand)
 {
     int i; /* counter */
     printf( "\n%s\n%-23s%+05d\n%-23s%5.2d\n%-23s%+05d\n%-23s%5.2d\n%-23s%5.2d",
@@ -276,9 +279,9 @@ void dump( int *memory, int accumulator, int instructionCounter, int instruction
     } /* end if */
     printf( "%+05d ", memory[ i ] );
     } /* end for */
-}
+}//end function dump
 
 int wordInRange(int instruction)
 {
     return instruction>=-9999 && instruction<=9999;
-}
+}//end function wordInRange
