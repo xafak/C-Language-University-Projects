@@ -1,4 +1,18 @@
-<<<SML Program for demonstrating average of 7 numbers using counter-controlled loop i.e. FOR loop, values can be +ve or -ve>>>
+/*
+ *           Filename:             SML Program (B).txt
+ *
+ *           Description:          SML Program for demonstrating average of 7 numbers using counter-controlled loop i.e. FOR loop, values can be +ve or -ve
+ *
+ *           Programming Language: Simpletron Machine Language
+ *
+ *           Created:              20th January, 2020 08:30 pm (PST)
+ *           Revision:             5th
+ *
+ *           @Author:              Sanzar Farooq - sanzarfarooq01@gmail.com
+ *           @Version:             1.5
+ *	    
+ */
+
 
 (In the following Program, all the variables are declared in the beginning and that's why I guess the program is not working
 please refer to the program that's written below)

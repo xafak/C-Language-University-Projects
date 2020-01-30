@@ -1,4 +1,17 @@
-<<<SML program for demonstrating addition of values using sentinel-controlled loop until user enters negative value>>>
+/*
+ *           Filename:             SML Program (A).txt
+ *
+ *           Description:          SML program for demonstrating addition of values using sentinel-controlled loop until user enters negative value
+ *
+ *           Programming Language: Simpletron Machine Language
+ *
+ *           Created:              19th January, 2020 09:30 pm (PST)
+ *           Revision:             None
+ *
+ *           @Author:              Sanzar Farooq - sanzarfarooq01@gmail.com
+ *           @Version:             1.0
+ *	    
+ */
 Location        WORD        Instruction
 00              1001        Read Value and store in location 01  
 01              0000        Variable VALUE
