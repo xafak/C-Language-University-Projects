@@ -1,0 +1,55 @@
+<<<SML Program for demonstrating average of 7 numbers using counter-controlled loop i.e. FOR loop, values can be +ve or -ve>>>
+
+(In the following Program, all the variables are declared in the beginning and that's why I guess the program is not working
+please refer to the program that's written below)
+
+Location        WORD        Instruction
+00              2002        Load the initial value of counter to accumulator
+01              0001        Data word describing the value to decrement
+02              0007        Data word describing the initial value for counter 
+03              0000        Data word SUM
+04              0000        Data word AVERAGE
+05              0000        Data word currentValue
+06              0000        Data word Current Counter     
+07              2106        Store the value from accumulator to variable Current Counter
+08              1005        Read value from terminal and save into variable currentValue
+09              2005        Load value from currentValue to accumulator
+10              3003        Add the value from variable sum to value in accumulator
+11              2103        Store the value from accumulator to variable SUM
+12              2006        Load the current counter to accumulator
+13              3101        Subtract decrement value from value in accumulator
+14              4217        If value in accumulator is equal to zero then move to location 17
+15              2106        Store the current counter value         
+16              4008        Repeat the process from location 08
+17              2003        Load the value saved in variable SUM into accumulator
+18              3202        Divide value in accumulator with the value in location 0602
+19              2104        Store the value in variable average
+20              1104        Write the value to the terminal from location 04
+21              4300        HALT Program
+
+(The following program works as all the variables and constant values are declared in the end)
+
+Location	Word	Instruction
+00	        2021	Load the initial value of counter to accumulator
+01	        2117	Store the value from accumulator to variable Current Counter
+02	        1016	Read value from terminal and save into variable currentValue
+03	        2016	Load value from currentValue to accumulator
+04	        3018	Add the value from variable sum to value in accumulator
+05	        2118	Store the value from accumulator to variable SUM
+06	        2017	Load the current counter to accumulator
+07	        3120	Subtract decrement value from value in accumulator
+08	        4211	If value in accumulator is equal to zero then move to location 11
+09	        2117	Store the current counter value 
+10	        4002	Repeat the process from location 02 i.e. again read another integer and so on
+11	        2018	Load the value saved in variable SUM into accumulator
+12	        3221	Divide value in accumulator with the value in location 21 i.e. value 7
+13	        2119	Store the value in variable average
+14	        1119	Write the value to the terminal from location 19 i.e. average value
+15	        4300	HALT Program
+16	        0000	Data word currentValue
+17	        0000	Data word Current Counter
+18	        0000	Data word SUM
+19	        0000	Data word AVERAGE
+20	        0001	Data word describing the value to decrement
+21	        0007	Data word describing the initial value for counter 
+

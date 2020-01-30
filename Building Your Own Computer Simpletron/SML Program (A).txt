@@ -1,0 +1,12 @@
+<<<SML program for demonstrating addition of values using sentinel-controlled loop until user enters negative value>>>
+Location        WORD        Instruction
+00              1001        Read Value and store in location 01  
+01              0000        Variable VALUE
+02              0000        Variable SUM
+03              2001        Load Variable VALUE from memory into accumulator
+04              4105        Check if the loaded value is negative if negative then move to location 05
+05              1102        Write SUM from memory to terminal
+06              4300        Halt(end program)
+07              3002        Add Sum, take value from location 02 and add it to the value present in accumulator
+08              2102        Store Sum, store the value from accumulator to location 02 i.e. SUM Variable
+09              4000        Branch (00) move to location 00
